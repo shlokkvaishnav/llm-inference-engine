@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mini-vLLM — Shlok Vaishnav</title>
+<meta name="description" content="A from-scratch LLM inference engine with continuous batching and a paged KV-cache, checked token for token against Hugging Face transformers.">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://shlokkvaishnav.github.io/llm-inference-engine/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="mini-vLLM — Shlok Vaishnav">
+<meta property="og:description" content="A from-scratch LLM inference engine with continuous batching and a paged KV-cache.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%238c2346'/%3E%3C/svg%3E">
+<link rel="preload" href="assets/fonts/literata.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="style.css">
+<script type="module" src="main.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<main id="main">
+<p class="crumb"><a href="https://shlokkvaishnav.github.io/"><svg class="icon" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/></svg> Shlok Vaishnav</a></p>
+<h1>mini-vLLM</h1>
+<p class="lead">A from-scratch LLM inference engine. It builds the two systems ideas behind vLLM: continuous batching and a paged KV-cache. It serves an OpenAI-compatible API, and it is checked token for token against Hugging Face transformers.</p>
+<p class="buttons"><a class="btn" href="https://github.com/shlokkvaishnav/llm-inference-engine"><svg class="icon" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/></svg> Code</a></p>
+
+<dl class="stats">
+<div class="stat"><dt>325 tok/s</dt><dd>mini-vLLM with all 8 prompts in one batch, on a T4 GPU</dd></div>
+<div class="stat"><dt>42 tok/s</dt><dd>Hugging Face <code>generate()</code>, one prompt at a time, same prompts</dd></div>
+<div class="stat"><dt>50 of 50</dt><dd>GPU tests pass, checked against Hugging Face</dd></div>
+<div class="stat"><dt>4× smaller</dt><dd>weights with INT4, at 0.98 cosine similarity</dd></div>
+</dl>
+
+<h2>How it works</h2>
+<h3>Continuous batching</h3>
+<p>Standard batching waits for a full batch, then releases the whole batch when the slowest sequence finishes. That wastes GPU time whenever sequences differ in length. Continuous batching runs a decode step every tick. New sequences join, and finished ones leave, without stalling the rest. The scheduler decides at each step which sequences run, which wait, and which get preempted under memory pressure. A preempted sequence has its blocks freed, and it is re-prefilled from its prompt and the tokens generated so far when it is admitted again.</p>
+<h3>Paged KV-cache</h3>
+<p>The key and value tensors that every attention layer accumulates grow with sequence length. A contiguous buffer per sequence fragments memory and caps the batch size. The paged cache works like virtual memory in an operating system: a fixed pool of physical blocks, each holding a set number of token slots, and a block table per sequence that maps positions to blocks. Sequences of very different lengths share one pool without fragmentation. On CUDA, a custom Triton kernel does the paged attention.</p>
+<h3>The pieces</h3>
+<ol class="steps">
+<li><strong>API layer.</strong> <code>POST /v1/completions</code> in FastAPI, with streaming.</li>
+<li><strong>AsyncLLMEngine.</strong> One background task steps the engine and sends tokens to each request.</li>
+<li><strong>LLMEngine.</strong> A scheduler that admits and preempts at every step, and a block manager that owns the pool of physical blocks.</li>
+<li><strong>Runner.</strong> A dense KV cache for CPU and tests, or the paged runner with the Triton kernel for Llama models on CUDA.</li>
+<li><strong>Model and weights.</strong> TinyLlama-1.1B and GPT-2.</li>
+</ol>
+
+<h2>Results</h2>
+<p class="muted">All GPU numbers come from a Kaggle T4 (16 GB) with TinyLlama-1.1B in fp16. The benchmarks were last re-run on 8 October 2026.</p>
+
+<h3>Throughput against Hugging Face</h3>
+<figure>
+<div class="chart" id="chart-throughput"></div>
+<figcaption>8 prompts, 32 output tokens each. With all 8 prompts in one batch, mini-vLLM matches batched Hugging Face within the noise from run to run. With a batch size of 4, only half the prompts run at a time, so it is slower. Compare rows within one run, not across runs: the Hugging Face baselines moved by about 15% between the last two runs. The comparison with vLLM itself is opt-in in the benchmark script, and it was not run.</figcaption>
+</figure>
+
+<h3>Under concurrent load</h3>
+<figure>
+<div class="chart" id="chart-load-throughput"></div>
+<figcaption>Throughput rises up to 8 concurrent requests, which is the server's default maximum batch size, and then stops growing.</figcaption>
+</figure>
+<figure>
+<div class="chart" id="chart-load-ttft"></div>
+<figcaption>Time to first token stays low up to 8 requests. At 16, requests queue and it rises sharply. The server was warmed up before the test.</figcaption>
+</figure>
+
+<h3>Quantization</h3>
+<figure>
+<p class="chart-title">Model size</p>
+<div class="chart" id="chart-quant-size"></div>
+<p class="chart-title">Decode speed</p>
+<div class="chart" id="chart-quant-speed"></div>
+<figcaption>The weights are quantized per channel, and they are converted back to fp16 before each matrix multiplication. The memory saving is real: INT8 halves the size and INT4 cuts it to a quarter, with a cosine similarity of 1.0000 and 0.9785 to fp16. Decode gets slower, though, because the conversion runs on every step. A real speed-up needs a fused low-precision kernel, which is not implemented. Size and quality are exact. Speed varies by about 10% from run to run.</figcaption>
+</figure>
+
+<h3>Correctness</h3>
+<p>Decoding is checked token for token against Hugging Face transformers. For quantization, the check is a calibrated error bound. All 50 tests pass on the GPU, with none skipped. On a CPU, 39 pass and 11 are skipped, because the Triton kernel and the real-model paged decode need CUDA.</p>
+<div class="table-wrap"><table>
+<caption>Test suites</caption>
+<thead><tr><th scope="col">Suite</th><th scope="col">Tests</th><th scope="col">What it shows</th></tr></thead>
+<tbody>
+<tr><th scope="row">Dense runner</th><td>3 of 3</td><td>Single, batched and continuous-batch decode match <code>model.generate()</code> exactly.</td></tr>
+<tr><th scope="row">Block manager, scheduler, paged attention</th><td>23 of 23</td><td>Block allocation, preemption under memory pressure, and paged attention (with grouped-query heads) match dense attention.</td></tr>
+<tr><th scope="row">Paged runner on a real model</th><td>4 of 4</td><td>The full paged decode path matches Hugging Face on the GPU. Batched sampling equals per-sequence sampling.</td></tr>
+<tr><th scope="row">Quantization</th><td>6 of 6</td><td>INT8 and INT4 round trips and model-level error bounds hold.</td></tr>
+<tr><th scope="row">API server</th><td>8 of 8</td><td>Streaming equals non-streaming. Concurrent requests match solo runs. Bad input is rejected. Stop strings cut the output.</td></tr>
+<tr><th scope="row">Engine robustness</th><td>6 of 6</td><td>Recompute after preemption matches an unconstrained run. Aborts and engine failures are handled.</td></tr>
+</tbody></table></div>
+
+<h2>What these numbers do not show</h2>
+<ul class="points">
+<li>All results come from one GPU and one small model, TinyLlama-1.1B.</li>
+<li>The decode path still loops over the model's 22 layers in Python, and prefill still uses the dense Hugging Face forward pass. Neither is profiled yet.</li>
+<li>Where the speed-up from the last round of changes comes from has not been measured one change at a time.</li>
+<li>The first run in a fresh process is much slower than the rest, so the benchmark scripts do an untimed warm-up first.</li>
+</ul>
+</main>
+<footer>
+<p>The charts are drawn in your browser from <code>site/data/benchmarks.json</code>, which holds the numbers from the README results tables.</p>
+<p><a href="https://github.com/shlokkvaishnav/llm-inference-engine">Source code</a> <a href="assets/CREDITS.md">Credits</a></p>
+</footer>
+</body>
+</html>
