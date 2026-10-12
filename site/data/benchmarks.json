@@ -1,0 +1,23 @@
+{
+  "source": "README.md, section Results",
+  "hardware": "Kaggle T4 (16 GB VRAM), TinyLlama-1.1B in fp16",
+  "lastRun": "2026-10-08",
+  "throughput": [
+    { "system": "Hugging Face generate(), naive", "tokensPerSecond": 42.1, "seconds": 6.09, "peakMemoryMB": 2212 },
+    { "system": "Hugging Face generate(), batched", "tokensPerSecond": 305.7, "seconds": 0.84, "peakMemoryMB": 2223 },
+    { "system": "mini-vLLM, batch size 4", "tokensPerSecond": 157.0, "seconds": 1.63, "peakMemoryMB": 2401 },
+    { "system": "mini-vLLM, batch size 8", "tokensPerSecond": 325.3, "seconds": 0.79, "peakMemoryMB": 2405 }
+  ],
+  "load": [
+    { "concurrency": 1, "p50": 32, "p95": 32, "p99": 32, "tokensPerSecond": 39.2 },
+    { "concurrency": 2, "p50": 61, "p95": 86, "p99": 88, "tokensPerSecond": 68.1 },
+    { "concurrency": 4, "p50": 142, "p95": 143, "p99": 143, "tokensPerSecond": 133.4 },
+    { "concurrency": 8, "p50": 130, "p95": 132, "p99": 132, "tokensPerSecond": 260.9 },
+    { "concurrency": 16, "p50": 658, "p95": 1247, "p99": 1247, "tokensPerSecond": 242.5 }
+  ],
+  "quantization": [
+    { "name": "fp16", "sizeMB": 1937.8, "cosineSimilarity": 1.0, "tokensPerSecond": 149.7 },
+    { "name": "INT8", "sizeMB": 970.5, "cosineSimilarity": 1.0, "tokensPerSecond": 41.9 },
+    { "name": "INT4", "sizeMB": 486.0, "cosineSimilarity": 0.9785, "tokensPerSecond": 22.2 }
+  ]
+}
