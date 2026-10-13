@@ -26,3 +26,15 @@ jobs:
 
       - name: Run tests
         run: pytest tests/ -v --tb=short
+
+  site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+
+      - name: Check the scheduler lab against the Python engine
+        run: node --test site/test/sim.test.mjs

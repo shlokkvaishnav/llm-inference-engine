@@ -26,6 +26,10 @@ verified token-for-token against Hugging Face `transformers`.
   validation and back-pressure.
 - **Benchmarks** — baseline comparison against Hugging Face `generate()` and a concurrent
   load test against the running server.
+- **Frontend** — the [project page](https://shlokkvaishnav.github.io/llm-inference-engine/) has a
+  scheduler lab (the engine's own scheduling code, ported to JavaScript and checked step by step
+  against the Python engine) and a playground that streams concurrent completions from your
+  running server.
 
 ## How it works
 
@@ -205,6 +209,7 @@ The server reads these environment variables at startup:
 | `MINI_VLLM_MAX_BATCH_SIZE` | `8` | Maximum sequences decoded together |
 | `MINI_VLLM_NUM_BLOCKS` | `512` | KV-cache blocks in the pool (paged runner only) |
 | `MINI_VLLM_BLOCK_SIZE` | `16` | Token slots per block (paged runner only) |
+| `MINI_VLLM_CORS_ORIGINS` | none | Comma-separated browser origins allowed to call the API, for example `https://shlokkvaishnav.github.io` for the playground. No CORS headers when unset. |
 
 The paged runner is used for Llama-family models on CUDA; everything else uses the dense
 runner. Prompt length plus `max_tokens` is capped at 2048 tokens and at the KV pool size.
@@ -237,7 +242,12 @@ docker compose up api-cpu    # CPU only, port 8001
 
 ```bash
 pytest tests/ -v                       # CPU subset
+node --test site/test/sim.test.mjs     # the scheduler lab's JS port against the Python engine
 ```
+
+- `site/test/make_golden.py` records step-by-step traces of the real `LLMEngine`, `Scheduler`
+  and `BlockManager` (no model needed). The Node test checks that `site/sim.js` reproduces every
+  step: queues, preemptions, block IDs and lengths.
 
 - GPU-only tests (Triton kernel, real-model paged decode) skip cleanly without CUDA.
 - `MINI_VLLM_TEST_MODEL` / `MINI_VLLM_TEST_DEVICE` select the model and device for the

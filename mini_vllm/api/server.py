@@ -19,6 +19,9 @@ settings with a _TEST_ infix, e.g. MINI_VLLM_TEST_MODEL):
   MINI_VLLM_MAX_BATCH_SIZE    default: 8
   MINI_VLLM_NUM_BLOCKS        default: 512   (paged KV-cache pool, Llama+GPU only)
   MINI_VLLM_BLOCK_SIZE        default: 16
+  MINI_VLLM_CORS_ORIGINS      default: none (comma-separated browser origins
+                              allowed to call the API, e.g. the project page's
+                              playground at https://shlokkvaishnav.github.io)
 
 Runner selection: PagedLlamaRunner (paged attention) when running a
 Llama-family model on CUDA; ModelRunner (dense) otherwise — e.g. for
@@ -39,6 +42,7 @@ from typing import AsyncIterator
 
 import torch
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 
 from mini_vllm.api.protocol import (
@@ -96,6 +100,21 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="mini-vLLM", lifespan=lifespan)
+
+
+def cors_origins() -> list[str]:
+    """Browser origins allowed to call the API, from MINI_VLLM_CORS_ORIGINS. Empty means no CORS headers."""
+    return [o.strip() for o in os.environ.get("MINI_VLLM_CORS_ORIGINS", "").split(",") if o.strip()]
+
+
+def add_cors(target: FastAPI, origins: list[str]) -> None:
+    """Let a web page on one of ``origins`` (the playground) call this server. Off by default."""
+    if origins:
+        target.add_middleware(CORSMiddleware, allow_origins=origins, allow_methods=["GET", "POST"], allow_headers=["Content-Type"])
+
+
+# Read at import time: middleware cannot be added after the app has started.
+add_cors(app, cors_origins())
 
 
 def _build_sequence(prompt: str, req: CompletionRequest) -> Sequence:
