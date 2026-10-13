@@ -1,15 +1,19 @@
 # mini-vLLM
 
+A mini vLLM built from scratch. It uses continuous batching, a paged KV cache, and Triton kernels, and is checked token for token against Hugging Face.
+
 [![CI](https://github.com/shlokkvaishnav/LLM-Inference-Engine/actions/workflows/ci.yml/badge.svg)](https://github.com/shlokkvaishnav/LLM-Inference-Engine/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 ![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)
+
+## Overview
 
 A from-scratch LLM inference engine implementing the two systems ideas behind
 [vLLM](https://github.com/vllm-project/vllm): **continuous (in-flight) batching** and a
 **block-based, paged KV-cache**. It serves an OpenAI-compatible `/v1/completions` API and is
 verified token-for-token against Hugging Face `transformers`.
 
-## Features
+### Features
 
 - **Continuous batching** — a decode step every tick; new requests join and finished ones leave
   without stalling the rest of the batch.
@@ -23,7 +27,26 @@ verified token-for-token against Hugging Face `transformers`.
 - **Benchmarks** — baseline comparison against Hugging Face `generate()` and a concurrent
   load test against the running server.
 
-## Architecture
+## How it works
+
+### Continuous batching
+Standard batching waits for a full batch before running, then releases the whole batch
+when the *slowest* sequence finishes — wasting GPU time whenever sequences differ in length.
+Continuous batching runs a decode step every tick, admitting new sequences and retiring
+finished ones without stalling the rest. The scheduler decides each step which sequences
+run, which wait, and which (under memory pressure) get preempted. A preempted sequence has
+its blocks freed and is re-prefilled from its prompt plus the tokens generated so far when
+it is admitted again.
+
+### Paged KV-cache
+The KV-cache (the key and value tensors every attention layer accumulates) grows with
+sequence length. Allocating a contiguous buffer per sequence fragments memory badly and caps
+batch size. Paged KV-cache treats the cache like OS virtual memory: a fixed pool of physical
+blocks, each holding `block_size` token slots, with a per-sequence block table mapping logical
+positions to physical storage. Sequences of wildly different lengths share the same pool
+without fragmentation.
+
+### Architecture
 
 ```
 ┌──────────────────────────────────────────────────────────┐
@@ -61,77 +84,6 @@ verified token-for-token against Hugging Face `transformers`.
 **Attention kernel path**
 - CPU (development and tests): standard PyTorch scaled dot-product attention.
 - CUDA: custom Triton paged-attention kernel (`PagedLlamaRunner`).
-
-## How it works
-
-### Continuous batching
-Standard batching waits for a full batch before running, then releases the whole batch
-when the *slowest* sequence finishes — wasting GPU time whenever sequences differ in length.
-Continuous batching runs a decode step every tick, admitting new sequences and retiring
-finished ones without stalling the rest. The scheduler decides each step which sequences
-run, which wait, and which (under memory pressure) get preempted. A preempted sequence has
-its blocks freed and is re-prefilled from its prompt plus the tokens generated so far when
-it is admitted again.
-
-### Paged KV-cache
-The KV-cache (the key and value tensors every attention layer accumulates) grows with
-sequence length. Allocating a contiguous buffer per sequence fragments memory badly and caps
-batch size. Paged KV-cache treats the cache like OS virtual memory: a fixed pool of physical
-blocks, each holding `block_size` token slots, with a per-sequence block table mapping logical
-positions to physical storage. Sequences of wildly different lengths share the same pool
-without fragmentation.
-
-## Quickstart
-
-```bash
-# Install (CPU development — no GPU needed)
-pip install -e ".[dev]"      # add ".[bench]" for the load-test chart, ".[gpu]" for Triton
-
-# Run the tests (CPU-safe subset; GPT-2 and a tiny random Llama)
-pytest tests/ -v
-
-# Run the API server (defaults to TinyLlama on CUDA if available, else CPU)
-MINI_VLLM_MODEL=gpt2 MINI_VLLM_DEVICE=cpu uvicorn mini_vllm.api.server:app
-```
-
-### Configuration
-
-The server reads these environment variables at startup:
-
-| Variable | Default | Meaning |
-|---|---|---|
-| `MINI_VLLM_MODEL` | `TinyLlama/TinyLlama-1.1B-Chat-v1.0` | Hugging Face model name or local path |
-| `MINI_VLLM_DEVICE` | `cuda` if available, else `cpu` | Device to run on |
-| `MINI_VLLM_MAX_BATCH_SIZE` | `8` | Maximum sequences decoded together |
-| `MINI_VLLM_NUM_BLOCKS` | `512` | KV-cache blocks in the pool (paged runner only) |
-| `MINI_VLLM_BLOCK_SIZE` | `16` | Token slots per block (paged runner only) |
-
-The paged runner is used for Llama-family models on CUDA; everything else uses the dense
-runner. Prompt length plus `max_tokens` is capped at 2048 tokens and at the KV pool size.
-
-### API
-
-```bash
-curl http://localhost:8000/v1/completions \
-  -H "Content-Type: application/json" \
-  -d '{"model": "gpt2", "prompt": "The capital of France is", "max_tokens": 16, "temperature": 0}'
-```
-
-Set `"stream": true` for server-sent events. Supported fields: `max_tokens`, `temperature`,
-`top_p`, `top_k`, `stop` (string or list), `stream`. `prompt` may be a string or a list of strings;
-a list returns one choice per prompt (`index` matches the position), and when streaming the
-per-prompt chunks are interleaved. Responses carry `usage` (`prompt_tokens`, `completion_tokens`,
-`total_tokens`); a stream ends with a chunk that has an empty `choices` list and the `usage`.
-Errors: `400` for an empty prompt or one that cannot fit (any bad prompt in a list rejects the
-whole request); `422` for out-of-range parameters; `503` when the waiting queue is full.
-`GET /v1/models` lists the loaded model and `GET /health` reports its status.
-
-### Docker
-
-```bash
-docker compose up api        # GPU (needs the NVIDIA Container Toolkit), port 8000
-docker compose up api-cpu    # CPU only, port 8001
-```
 
 ## Results
 
@@ -229,7 +181,59 @@ fixed static batch. The server was warmed up before the ramp.
 Benchmark CSV, PNG and JSON outputs are gitignored; regenerate them with the scripts in
 `benchmarks/` or the Kaggle notebook.
 
-## Testing
+## Run it locally
+
+```bash
+# Install (CPU development — no GPU needed)
+pip install -e ".[dev]"      # add ".[bench]" for the load-test chart, ".[gpu]" for Triton
+
+# Run the tests (CPU-safe subset; GPT-2 and a tiny random Llama)
+pytest tests/ -v
+
+# Run the API server (defaults to TinyLlama on CUDA if available, else CPU)
+MINI_VLLM_MODEL=gpt2 MINI_VLLM_DEVICE=cpu uvicorn mini_vllm.api.server:app
+```
+
+### Configuration
+
+The server reads these environment variables at startup:
+
+| Variable | Default | Meaning |
+|---|---|---|
+| `MINI_VLLM_MODEL` | `TinyLlama/TinyLlama-1.1B-Chat-v1.0` | Hugging Face model name or local path |
+| `MINI_VLLM_DEVICE` | `cuda` if available, else `cpu` | Device to run on |
+| `MINI_VLLM_MAX_BATCH_SIZE` | `8` | Maximum sequences decoded together |
+| `MINI_VLLM_NUM_BLOCKS` | `512` | KV-cache blocks in the pool (paged runner only) |
+| `MINI_VLLM_BLOCK_SIZE` | `16` | Token slots per block (paged runner only) |
+
+The paged runner is used for Llama-family models on CUDA; everything else uses the dense
+runner. Prompt length plus `max_tokens` is capped at 2048 tokens and at the KV pool size.
+
+### API
+
+```bash
+curl http://localhost:8000/v1/completions \
+  -H "Content-Type: application/json" \
+  -d '{"model": "gpt2", "prompt": "The capital of France is", "max_tokens": 16, "temperature": 0}'
+```
+
+Set `"stream": true` for server-sent events. Supported fields: `max_tokens`, `temperature`,
+`top_p`, `top_k`, `stop` (string or list), `stream`. `prompt` may be a string or a list of strings;
+a list returns one choice per prompt (`index` matches the position), and when streaming the
+per-prompt chunks are interleaved. Responses carry `usage` (`prompt_tokens`, `completion_tokens`,
+`total_tokens`); a stream ends with a chunk that has an empty `choices` list and the `usage`.
+Errors: `400` for an empty prompt or one that cannot fit (any bad prompt in a list rejects the
+whole request); `422` for out-of-range parameters; `503` when the waiting queue is full.
+`GET /v1/models` lists the loaded model and `GET /health` reports its status.
+
+### Docker
+
+```bash
+docker compose up api        # GPU (needs the NVIDIA Container Toolkit), port 8000
+docker compose up api-cpu    # CPU only, port 8001
+```
+
+## Tests
 
 ```bash
 pytest tests/ -v                       # CPU subset
@@ -242,6 +246,15 @@ pytest tests/ -v                       # CPU subset
 - `transformers` is supported from 4.45; CI runs the latest 5.x on CPU and the Kaggle GPU run
   pins 4.46.3. The notebook [`notebooks/kaggle_gpu_benchmarks.ipynb`](notebooks/kaggle_gpu_benchmarks.ipynb)
   runs the full suite and the benchmarks on a Kaggle T4 end to end.
+
+## Limitations
+
+- Prefix caching is not implemented (block `ref_count` is reserved for it).
+- The paged runner supports Llama-family models on CUDA only; other models use the dense runner.
+- Quantization saves memory but is slower than fp16 (see above).
+- There is no chat endpoint, authentication or rate limiting.
+- The server is a single process holding one model; running several uvicorn workers loads
+  one copy per worker.
 
 ## Repo layout
 
@@ -264,15 +277,6 @@ notebooks/        Kaggle GPU notebook: tests + benchmarks, self-contained
 Dockerfile        GPU image          docker-compose.yml   api / api-cpu services
 Dockerfile.cpu    CPU image
 ```
-
-## Limitations
-
-- Prefix caching is not implemented (block `ref_count` is reserved for it).
-- The paged runner supports Llama-family models on CUDA only; other models use the dense runner.
-- Quantization saves memory but is slower than fp16 (see above).
-- There is no chat endpoint, authentication or rate limiting.
-- The server is a single process holding one model; running several uvicorn workers loads
-  one copy per worker.
 
 ## License
 
