@@ -6,5 +6,5 @@ cd "$(dirname "$0")/.."
 rm -rf _site
 mkdir -p _site
 cp -R site/. _site/
-rm -f _site/build.sh
+rm -rf _site/build.sh _site/test
 echo "Built _site/"
