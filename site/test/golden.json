@@ -1,0 +1,2935 @@
+{
+ "roomy": {
+  "config": {
+   "num_blocks": 64,
+   "block_size": 4,
+   "max_batch_size": 4,
+   "arrivals": [
+    [
+     0,
+     5,
+     6
+    ],
+    [
+     0,
+     9,
+     3
+    ],
+    [
+     0,
+     3,
+     8
+    ],
+    [
+     0,
+     12,
+     4
+    ],
+    [
+     0,
+     4,
+     5
+    ],
+    [
+     0,
+     7,
+     7
+    ]
+   ]
+  },
+  "trace": [
+   {
+    "step": 0,
+    "scheduled": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "preempted": [],
+    "waiting": [
+     4,
+     5
+    ],
+    "running": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "free_blocks": 55,
+    "seqs": {
+     "0": {
+      "status": "RUNNING",
+      "length": 6,
+      "prompt": 5,
+      "generated": 1,
+      "blocks": [
+       63,
+       62
+      ]
+     },
+     "1": {
+      "status": "RUNNING",
+      "length": 10,
+      "prompt": 9,
+      "generated": 1,
+      "blocks": [
+       61,
+       60,
+       59
+      ]
+     },
+     "2": {
+      "status": "RUNNING",
+      "length": 4,
+      "prompt": 3,
+      "generated": 1,
+      "blocks": [
+       58
+      ]
+     },
+     "3": {
+      "status": "RUNNING",
+      "length": 13,
+      "prompt": 12,
+      "generated": 1,
+      "blocks": [
+       57,
+       56,
+       55
+      ]
+     },
+     "4": {
+      "status": "WAITING",
+      "length": 4,
+      "prompt": 4,
+      "generated": 0,
+      "blocks": []
+     },
+     "5": {
+      "status": "WAITING",
+      "length": 7,
+      "prompt": 7,
+      "generated": 0,
+      "blocks": []
+     }
+    }
+   },
+   {
+    "step": 1,
+    "scheduled": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "preempted": [],
+    "waiting": [
+     4,
+     5
+    ],
+    "running": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "free_blocks": 53,
+    "seqs": {
+     "0": {
+      "status": "RUNNING",
+      "length": 7,
+      "prompt": 5,
+      "generated": 2,
+      "blocks": [
+       63,
+       62
+      ]
+     },
+     "1": {
+      "status": "RUNNING",
+      "length": 11,
+      "prompt": 9,
+      "generated": 2,
+      "blocks": [
+       61,
+       60,
+       59
+      ]
+     },
+     "2": {
+      "status": "RUNNING",
+      "length": 5,
+      "prompt": 3,
+      "generated": 2,
+      "blocks": [
+       58,
+       53
+      ]
+     },
+     "3": {
+      "status": "RUNNING",
+      "length": 14,
+      "prompt": 12,
+      "generated": 2,
+      "blocks": [
+       57,
+       56,
+       55,
+       54
+      ]
+     },
+     "4": {
+      "status": "WAITING",
+      "length": 4,
+      "prompt": 4,
+      "generated": 0,
+      "blocks": []
+     },
+     "5": {
+      "status": "WAITING",
+      "length": 7,
+      "prompt": 7,
+      "generated": 0,
+      "blocks": []
+     }
+    }
+   },
+   {
+    "step": 2,
+    "scheduled": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "preempted": [],
+    "waiting": [
+     4,
+     5
+    ],
+    "running": [
+     0,
+     2,
+     3
+    ],
+    "free_blocks": 56,
+    "seqs": {
+     "0": {
+      "status": "RUNNING",
+      "length": 8,
+      "prompt": 5,
+      "generated": 3,
+      "blocks": [
+       63,
+       62
+      ]
+     },
+     "1": {
+      "status": "FINISHED",
+      "length": 12,
+      "prompt": 9,
+      "generated": 3,
+      "blocks": []
+     },
+     "2": {
+      "status": "RUNNING",
+      "length": 6,
+      "prompt": 3,
+      "generated": 3,
+      "blocks": [
+       58,
+       53
+      ]
+     },
+     "3": {
+      "status": "RUNNING",
+      "length": 15,
+      "prompt": 12,
+      "generated": 3,
+      "blocks": [
+       57,
+       56,
+       55,
+       54
+      ]
+     },
+     "4": {
+      "status": "WAITING",
+      "length": 4,
+      "prompt": 4,
+      "generated": 0,
+      "blocks": []
+     },
+     "5": {
+      "status": "WAITING",
+      "length": 7,
+      "prompt": 7,
+      "generated": 0,
+      "blocks": []
+     }
+    }
+   },
+   {
+    "step": 3,
+    "scheduled": [
+     0,
+     2,
+     3,
+     4
+    ],
+    "preempted": [],
+    "waiting": [
+     5
+    ],
+    "running": [
+     0,
+     2,
+     4
+    ],
+    "free_blocks": 58,
+    "seqs": {
+     "0": {
+      "status": "RUNNING",
+      "length": 9,
+      "prompt": 5,
+      "generated": 4,
+      "blocks": [
+       63,
+       62,
+       59
+      ]
+     },
+     "1": {
+      "status": "FINISHED",
+      "length": 12,
+      "prompt": 9,
+      "generated": 3,
+      "blocks": []
+     },
+     "2": {
+      "status": "RUNNING",
+      "length": 7,
+      "prompt": 3,
+      "generated": 4,
+      "blocks": [
+       58,
+       53
+      ]
+     },
+     "3": {
+      "status": "FINISHED",
+      "length": 16,
+      "prompt": 12,
+      "generated": 4,
+      "blocks": []
+     },
+     "4": {
+      "status": "RUNNING",
+      "length": 5,
+      "prompt": 4,
+      "generated": 1,
+      "blocks": [
+       60
+      ]
+     },
+     "5": {
+      "status": "WAITING",
+      "length": 7,
+      "prompt": 7,
+      "generated": 0,
+      "blocks": []
+     }
+    }
+   },
+   {
+    "step": 4,
+    "scheduled": [
+     0,
+     2,
+     4,
+     5
+    ],
+    "preempted": [],
+    "waiting": [],
+    "running": [
+     0,
+     2,
+     4,
+     5
+    ],
+    "free_blocks": 55,
+    "seqs": {
+     "0": {
+      "status": "RUNNING",
+      "length": 10,
+      "prompt": 5,
+      "generated": 5,
+      "blocks": [
+       63,
+       62,
+       59
+      ]
+     },
+     "1": {
+      "status": "FINISHED",
+      "length": 12,
+      "prompt": 9,
+      "generated": 3,
+      "blocks": []
+     },
+     "2": {
+      "status": "RUNNING",
+      "length": 8,
+      "prompt": 3,
+      "generated": 5,
+      "blocks": [
+       58,
+       53
+      ]
+     },
+     "3": {
+      "status": "FINISHED",
+      "length": 16,
+      "prompt": 12,
+      "generated": 4,
+      "blocks": []
+     },
+     "4": {
+      "status": "RUNNING",
+      "length": 6,
+      "prompt": 4,
+      "generated": 2,
+      "blocks": [
+       60,
+       54
+      ]
+     },
+     "5": {
+      "status": "RUNNING",
+      "length": 8,
+      "prompt": 7,
+      "generated": 1,
+      "blocks": [
+       55,
+       56
+      ]
+     }
+    }
+   },
+   {
+    "step": 5,
+    "scheduled": [
+     0,
+     2,
+     4,
+     5
+    ],
+    "preempted": [],
+    "waiting": [],
+    "running": [
+     2,
+     4,
+     5
+    ],
+    "free_blocks": 56,
+    "seqs": {
+     "0": {
+      "status": "FINISHED",
+      "length": 11,
+      "prompt": 5,
+      "generated": 6,
+      "blocks": []
+     },
+     "1": {
+      "status": "FINISHED",
+      "length": 12,
+      "prompt": 9,
+      "generated": 3,
+      "blocks": []
+     },
+     "2": {
+      "status": "RUNNING",
+      "length": 9,
+      "prompt": 3,
+      "generated": 6,
+      "blocks": [
+       58,
+       53,
+       61
+      ]
+     },
+     "3": {
+      "status": "FINISHED",
+      "length": 16,
+      "prompt": 12,
+      "generated": 4,
+      "blocks": []
+     },
+     "4": {
+      "status": "RUNNING",
+      "length": 7,
+      "prompt": 4,
+      "generated": 3,
+      "blocks": [
+       60,
+       54
+      ]
+     },
+     "5": {
+      "status": "RUNNING",
+      "length": 9,
+      "prompt": 7,
+      "generated": 2,
+      "blocks": [
+       55,
+       56,
+       57
+      ]
+     }
+    }
+   },
+   {
+    "step": 6,
+    "scheduled": [
+     2,
+     4,
+     5
+    ],
+    "preempted": [],
+    "waiting": [],
+    "running": [
+     2,
+     4,
+     5
+    ],
+    "free_blocks": 56,
+    "seqs": {
+     "0": {
+      "status": "FINISHED",
+      "length": 11,
+      "prompt": 5,
+      "generated": 6,
+      "blocks": []
+     },
+     "1": {
+      "status": "FINISHED",
+      "length": 12,
+      "prompt": 9,
+      "generated": 3,
+      "blocks": []
+     },
+     "2": {
+      "status": "RUNNING",
+      "length": 10,
+      "prompt": 3,
+      "generated": 7,
+      "blocks": [
+       58,
+       53,
+       61
+      ]
+     },
+     "3": {
+      "status": "FINISHED",
+      "length": 16,
+      "prompt": 12,
+      "generated": 4,
+      "blocks": []
+     },
+     "4": {
+      "status": "RUNNING",
+      "length": 8,
+      "prompt": 4,
+      "generated": 4,
+      "blocks": [
+       60,
+       54
+      ]
+     },
+     "5": {
+      "status": "RUNNING",
+      "length": 10,
+      "prompt": 7,
+      "generated": 3,
+      "blocks": [
+       55,
+       56,
+       57
+      ]
+     }
+    }
+   },
+   {
+    "step": 7,
+    "scheduled": [
+     2,
+     4,
+     5
+    ],
+    "preempted": [],
+    "waiting": [],
+    "running": [
+     5
+    ],
+    "free_blocks": 61,
+    "seqs": {
+     "0": {
+      "status": "FINISHED",
+      "length": 11,
+      "prompt": 5,
+      "generated": 6,
+      "blocks": []
+     },
+     "1": {
+      "status": "FINISHED",
+      "length": 12,
+      "prompt": 9,
+      "generated": 3,
+      "blocks": []
+     },
+     "2": {
+      "status": "FINISHED",
+      "length": 11,
+      "prompt": 3,
+      "generated": 8,
+      "blocks": []
+     },
+     "3": {
+      "status": "FINISHED",
+      "length": 16,
+      "prompt": 12,
+      "generated": 4,
+      "blocks": []
+     },
+     "4": {
+      "status": "FINISHED",
+      "length": 9,
+      "prompt": 4,
+      "generated": 5,
+      "blocks": []
+     },
+     "5": {
+      "status": "RUNNING",
+      "length": 11,
+      "prompt": 7,
+      "generated": 4,
+      "blocks": [
+       55,
+       56,
+       57
+      ]
+     }
+    }
+   },
+   {
+    "step": 8,
+    "scheduled": [
+     5
+    ],
+    "preempted": [],
+    "waiting": [],
+    "running": [
+     5
+    ],
+    "free_blocks": 61,
+    "seqs": {
+     "0": {
+      "status": "FINISHED",
+      "length": 11,
+      "prompt": 5,
+      "generated": 6,
+      "blocks": []
+     },
+     "1": {
+      "status": "FINISHED",
+      "length": 12,
+      "prompt": 9,
+      "generated": 3,
+      "blocks": []
+     },
+     "2": {
+      "status": "FINISHED",
+      "length": 11,
+      "prompt": 3,
+      "generated": 8,
+      "blocks": []
+     },
+     "3": {
+      "status": "FINISHED",
+      "length": 16,
+      "prompt": 12,
+      "generated": 4,
+      "blocks": []
+     },
+     "4": {
+      "status": "FINISHED",
+      "length": 9,
+      "prompt": 4,
+      "generated": 5,
+      "blocks": []
+     },
+     "5": {
+      "status": "RUNNING",
+      "length": 12,
+      "prompt": 7,
+      "generated": 5,
+      "blocks": [
+       55,
+       56,
+       57
+      ]
+     }
+    }
+   },
+   {
+    "step": 9,
+    "scheduled": [
+     5
+    ],
+    "preempted": [],
+    "waiting": [],
+    "running": [
+     5
+    ],
+    "free_blocks": 60,
+    "seqs": {
+     "0": {
+      "status": "FINISHED",
+      "length": 11,
+      "prompt": 5,
+      "generated": 6,
+      "blocks": []
+     },
+     "1": {
+      "status": "FINISHED",
+      "length": 12,
+      "prompt": 9,
+      "generated": 3,
+      "blocks": []
+     },
+     "2": {
+      "status": "FINISHED",
+      "length": 11,
+      "prompt": 3,
+      "generated": 8,
+      "blocks": []
+     },
+     "3": {
+      "status": "FINISHED",
+      "length": 16,
+      "prompt": 12,
+      "generated": 4,
+      "blocks": []
+     },
+     "4": {
+      "status": "FINISHED",
+      "length": 9,
+      "prompt": 4,
+      "generated": 5,
+      "blocks": []
+     },
+     "5": {
+      "status": "RUNNING",
+      "length": 13,
+      "prompt": 7,
+      "generated": 6,
+      "blocks": [
+       55,
+       56,
+       57,
+       59
+      ]
+     }
+    }
+   },
+   {
+    "step": 10,
+    "scheduled": [
+     5
+    ],
+    "preempted": [],
+    "waiting": [],
+    "running": [],
+    "free_blocks": 64,
+    "seqs": {
+     "0": {
+      "status": "FINISHED",
+      "length": 11,
+      "prompt": 5,
+      "generated": 6,
+      "blocks": []
+     },
+     "1": {
+      "status": "FINISHED",
+      "length": 12,
+      "prompt": 9,
+      "generated": 3,
+      "blocks": []
+     },
+     "2": {
+      "status": "FINISHED",
+      "length": 11,
+      "prompt": 3,
+      "generated": 8,
+      "blocks": []
+     },
+     "3": {
+      "status": "FINISHED",
+      "length": 16,
+      "prompt": 12,
+      "generated": 4,
+      "blocks": []
+     },
+     "4": {
+      "status": "FINISHED",
+      "length": 9,
+      "prompt": 4,
+      "generated": 5,
+      "blocks": []
+     },
+     "5": {
+      "status": "FINISHED",
+      "length": 14,
+      "prompt": 7,
+      "generated": 7,
+      "blocks": []
+     }
+    }
+   }
+  ]
+ },
+ "tight": {
+  "config": {
+   "num_blocks": 10,
+   "block_size": 4,
+   "max_batch_size": 4,
+   "arrivals": [
+    [
+     0,
+     6,
+     12
+    ],
+    [
+     0,
+     5,
+     14
+    ],
+    [
+     0,
+     7,
+     10
+    ],
+    [
+     0,
+     4,
+     9
+    ],
+    [
+     2,
+     3,
+     6
+    ]
+   ]
+  },
+  "trace": [
+   {
+    "step": 0,
+    "scheduled": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "preempted": [],
+    "waiting": [],
+    "running": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "free_blocks": 3,
+    "seqs": {
+     "0": {
+      "status": "RUNNING",
+      "length": 7,
+      "prompt": 6,
+      "generated": 1,
+      "blocks": [
+       9,
+       8
+      ]
+     },
+     "1": {
+      "status": "RUNNING",
+      "length": 6,
+      "prompt": 5,
+      "generated": 1,
+      "blocks": [
+       7,
+       6
+      ]
+     },
+     "2": {
+      "status": "RUNNING",
+      "length": 8,
+      "prompt": 7,
+      "generated": 1,
+      "blocks": [
+       5,
+       4
+      ]
+     },
+     "3": {
+      "status": "RUNNING",
+      "length": 5,
+      "prompt": 4,
+      "generated": 1,
+      "blocks": [
+       3
+      ]
+     }
+    }
+   },
+   {
+    "step": 1,
+    "scheduled": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "preempted": [],
+    "waiting": [],
+    "running": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "free_blocks": 1,
+    "seqs": {
+     "0": {
+      "status": "RUNNING",
+      "length": 8,
+      "prompt": 6,
+      "generated": 2,
+      "blocks": [
+       9,
+       8
+      ]
+     },
+     "1": {
+      "status": "RUNNING",
+      "length": 7,
+      "prompt": 5,
+      "generated": 2,
+      "blocks": [
+       7,
+       6
+      ]
+     },
+     "2": {
+      "status": "RUNNING",
+      "length": 9,
+      "prompt": 7,
+      "generated": 2,
+      "blocks": [
+       5,
+       4,
+       1
+      ]
+     },
+     "3": {
+      "status": "RUNNING",
+      "length": 6,
+      "prompt": 4,
+      "generated": 2,
+      "blocks": [
+       3,
+       2
+      ]
+     }
+    }
+   },
+   {
+    "step": 2,
+    "scheduled": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "preempted": [],
+    "waiting": [
+     4
+    ],
+    "running": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "free_blocks": 0,
+    "seqs": {
+     "0": {
+      "status": "RUNNING",
+      "length": 9,
+      "prompt": 6,
+      "generated": 3,
+      "blocks": [
+       9,
+       8,
+       0
+      ]
+     },
+     "1": {
+      "status": "RUNNING",
+      "length": 8,
+      "prompt": 5,
+      "generated": 3,
+      "blocks": [
+       7,
+       6
+      ]
+     },
+     "2": {
+      "status": "RUNNING",
+      "length": 10,
+      "prompt": 7,
+      "generated": 3,
+      "blocks": [
+       5,
+       4,
+       1
+      ]
+     },
+     "3": {
+      "status": "RUNNING",
+      "length": 7,
+      "prompt": 4,
+      "generated": 3,
+      "blocks": [
+       3,
+       2
+      ]
+     },
+     "4": {
+      "status": "WAITING",
+      "length": 3,
+      "prompt": 3,
+      "generated": 0,
+      "blocks": []
+     }
+    }
+   },
+   {
+    "step": 3,
+    "scheduled": [
+     0,
+     2,
+     3,
+     1
+    ],
+    "preempted": [
+     1
+    ],
+    "waiting": [
+     4
+    ],
+    "running": [
+     0,
+     2,
+     3,
+     1
+    ],
+    "free_blocks": 0,
+    "seqs": {
+     "0": {
+      "status": "RUNNING",
+      "length": 10,
+      "prompt": 6,
+      "generated": 4,
+      "blocks": [
+       9,
+       8,
+       0
+      ]
+     },
+     "1": {
+      "status": "RUNNING",
+      "length": 9,
+      "prompt": 8,
+      "generated": 4,
+      "blocks": [
+       6,
+       7
+      ]
+     },
+     "2": {
+      "status": "RUNNING",
+      "length": 11,
+      "prompt": 7,
+      "generated": 4,
+      "blocks": [
+       5,
+       4,
+       1
+      ]
+     },
+     "3": {
+      "status": "RUNNING",
+      "length": 8,
+      "prompt": 4,
+      "generated": 4,
+      "blocks": [
+       3,
+       2
+      ]
+     },
+     "4": {
+      "status": "WAITING",
+      "length": 3,
+      "prompt": 3,
+      "generated": 0,
+      "blocks": []
+     }
+    }
+   },
+   {
+    "step": 4,
+    "scheduled": [
+     0,
+     2,
+     3
+    ],
+    "preempted": [
+     1
+    ],
+    "waiting": [
+     1,
+     4
+    ],
+    "running": [
+     0,
+     2,
+     3
+    ],
+    "free_blocks": 1,
+    "seqs": {
+     "0": {
+      "status": "RUNNING",
+      "length": 11,
+      "prompt": 6,
+      "generated": 5,
+      "blocks": [
+       9,
+       8,
+       0
+      ]
+     },
+     "1": {
+      "status": "PREEMPTED",
+      "length": 9,
+      "prompt": 9,
+      "generated": 4,
+      "blocks": []
+     },
+     "2": {
+      "status": "RUNNING",
+      "length": 12,
+      "prompt": 7,
+      "generated": 5,
+      "blocks": [
+       5,
+       4,
+       1
+      ]
+     },
+     "3": {
+      "status": "RUNNING",
+      "length": 9,
+      "prompt": 4,
+      "generated": 5,
+      "blocks": [
+       3,
+       2,
+       7
+      ]
+     },
+     "4": {
+      "status": "WAITING",
+      "length": 3,
+      "prompt": 3,
+      "generated": 0,
+      "blocks": []
+     }
+    }
+   },
+   {
+    "step": 5,
+    "scheduled": [
+     0,
+     2,
+     3
+    ],
+    "preempted": [],
+    "waiting": [
+     1,
+     4
+    ],
+    "running": [
+     0,
+     2,
+     3
+    ],
+    "free_blocks": 0,
+    "seqs": {
+     "0": {
+      "status": "RUNNING",
+      "length": 12,
+      "prompt": 6,
+      "generated": 6,
+      "blocks": [
+       9,
+       8,
+       0
+      ]
+     },
+     "1": {
+      "status": "PREEMPTED",
+      "length": 9,
+      "prompt": 9,
+      "generated": 4,
+      "blocks": []
+     },
+     "2": {
+      "status": "RUNNING",
+      "length": 13,
+      "prompt": 7,
+      "generated": 6,
+      "blocks": [
+       5,
+       4,
+       1,
+       6
+      ]
+     },
+     "3": {
+      "status": "RUNNING",
+      "length": 10,
+      "prompt": 4,
+      "generated": 6,
+      "blocks": [
+       3,
+       2,
+       7
+      ]
+     },
+     "4": {
+      "status": "WAITING",
+      "length": 3,
+      "prompt": 3,
+      "generated": 0,
+      "blocks": []
+     }
+    }
+   },
+   {
+    "step": 6,
+    "scheduled": [
+     2,
+     3,
+     0
+    ],
+    "preempted": [
+     0
+    ],
+    "waiting": [
+     1,
+     4
+    ],
+    "running": [
+     2,
+     3,
+     0
+    ],
+    "free_blocks": 0,
+    "seqs": {
+     "0": {
+      "status": "RUNNING",
+      "length": 13,
+      "prompt": 12,
+      "generated": 7,
+      "blocks": [
+       0,
+       8,
+       9
+      ]
+     },
+     "1": {
+      "status": "PREEMPTED",
+      "length": 9,
+      "prompt": 9,
+      "generated": 4,
+      "blocks": []
+     },
+     "2": {
+      "status": "RUNNING",
+      "length": 14,
+      "prompt": 7,
+      "generated": 7,
+      "blocks": [
+       5,
+       4,
+       1,
+       6
+      ]
+     },
+     "3": {
+      "status": "RUNNING",
+      "length": 11,
+      "prompt": 4,
+      "generated": 7,
+      "blocks": [
+       3,
+       2,
+       7
+      ]
+     },
+     "4": {
+      "status": "WAITING",
+      "length": 3,
+      "prompt": 3,
+      "generated": 0,
+      "blocks": []
+     }
+    }
+   },
+   {
+    "step": 7,
+    "scheduled": [
+     2,
+     3
+    ],
+    "preempted": [
+     0
+    ],
+    "waiting": [
+     0,
+     1,
+     4
+    ],
+    "running": [
+     2,
+     3
+    ],
+    "free_blocks": 3,
+    "seqs": {
+     "0": {
+      "status": "PREEMPTED",
+      "length": 13,
+      "prompt": 13,
+      "generated": 7,
+      "blocks": []
+     },
+     "1": {
+      "status": "PREEMPTED",
+      "length": 9,
+      "prompt": 9,
+      "generated": 4,
+      "blocks": []
+     },
+     "2": {
+      "status": "RUNNING",
+      "length": 15,
+      "prompt": 7,
+      "generated": 8,
+      "blocks": [
+       5,
+       4,
+       1,
+       6
+      ]
+     },
+     "3": {
+      "status": "RUNNING",
+      "length": 12,
+      "prompt": 4,
+      "generated": 8,
+      "blocks": [
+       3,
+       2,
+       7
+      ]
+     },
+     "4": {
+      "status": "WAITING",
+      "length": 3,
+      "prompt": 3,
+      "generated": 0,
+      "blocks": []
+     }
+    }
+   },
+   {
+    "step": 8,
+    "scheduled": [
+     2,
+     3
+    ],
+    "preempted": [],
+    "waiting": [
+     0,
+     1,
+     4
+    ],
+    "running": [
+     2
+    ],
+    "free_blocks": 6,
+    "seqs": {
+     "0": {
+      "status": "PREEMPTED",
+      "length": 13,
+      "prompt": 13,
+      "generated": 7,
+      "blocks": []
+     },
+     "1": {
+      "status": "PREEMPTED",
+      "length": 9,
+      "prompt": 9,
+      "generated": 4,
+      "blocks": []
+     },
+     "2": {
+      "status": "RUNNING",
+      "length": 16,
+      "prompt": 7,
+      "generated": 9,
+      "blocks": [
+       5,
+       4,
+       1,
+       6
+      ]
+     },
+     "3": {
+      "status": "FINISHED",
+      "length": 13,
+      "prompt": 4,
+      "generated": 9,
+      "blocks": []
+     },
+     "4": {
+      "status": "WAITING",
+      "length": 3,
+      "prompt": 3,
+      "generated": 0,
+      "blocks": []
+     }
+    }
+   },
+   {
+    "step": 9,
+    "scheduled": [
+     2,
+     0
+    ],
+    "preempted": [],
+    "waiting": [
+     1,
+     4
+    ],
+    "running": [
+     0
+    ],
+    "free_blocks": 6,
+    "seqs": {
+     "0": {
+      "status": "RUNNING",
+      "length": 14,
+      "prompt": 13,
+      "generated": 8,
+      "blocks": [
+       7,
+       2,
+       3,
+       8
+      ]
+     },
+     "1": {
+      "status": "PREEMPTED",
+      "length": 9,
+      "prompt": 9,
+      "generated": 4,
+      "blocks": []
+     },
+     "2": {
+      "status": "FINISHED",
+      "length": 17,
+      "prompt": 7,
+      "generated": 10,
+      "blocks": []
+     },
+     "3": {
+      "status": "FINISHED",
+      "length": 13,
+      "prompt": 4,
+      "generated": 9,
+      "blocks": []
+     },
+     "4": {
+      "status": "WAITING",
+      "length": 3,
+      "prompt": 3,
+      "generated": 0,
+      "blocks": []
+     }
+    }
+   },
+   {
+    "step": 10,
+    "scheduled": [
+     0,
+     1,
+     4
+    ],
+    "preempted": [],
+    "waiting": [],
+    "running": [
+     0,
+     1,
+     4
+    ],
+    "free_blocks": 2,
+    "seqs": {
+     "0": {
+      "status": "RUNNING",
+      "length": 15,
+      "prompt": 13,
+      "generated": 9,
+      "blocks": [
+       7,
+       2,
+       3,
+       8
+      ]
+     },
+     "1": {
+      "status": "RUNNING",
+      "length": 10,
+      "prompt": 9,
+      "generated": 5,
+      "blocks": [
+       9,
+       6,
+       1
+      ]
+     },
+     "2": {
+      "status": "FINISHED",
+      "length": 17,
+      "prompt": 7,
+      "generated": 10,
+      "blocks": []
+     },
+     "3": {
+      "status": "FINISHED",
+      "length": 13,
+      "prompt": 4,
+      "generated": 9,
+      "blocks": []
+     },
+     "4": {
+      "status": "RUNNING",
+      "length": 4,
+      "prompt": 3,
+      "generated": 1,
+      "blocks": [
+       4
+      ]
+     }
+    }
+   },
+   {
+    "step": 11,
+    "scheduled": [
+     0,
+     1,
+     4
+    ],
+    "preempted": [],
+    "waiting": [],
+    "running": [
+     0,
+     1,
+     4
+    ],
+    "free_blocks": 1,
+    "seqs": {
+     "0": {
+      "status": "RUNNING",
+      "length": 16,
+      "prompt": 13,
+      "generated": 10,
+      "blocks": [
+       7,
+       2,
+       3,
+       8
+      ]
+     },
+     "1": {
+      "status": "RUNNING",
+      "length": 11,
+      "prompt": 9,
+      "generated": 6,
+      "blocks": [
+       9,
+       6,
+       1
+      ]
+     },
+     "2": {
+      "status": "FINISHED",
+      "length": 17,
+      "prompt": 7,
+      "generated": 10,
+      "blocks": []
+     },
+     "3": {
+      "status": "FINISHED",
+      "length": 13,
+      "prompt": 4,
+      "generated": 9,
+      "blocks": []
+     },
+     "4": {
+      "status": "RUNNING",
+      "length": 5,
+      "prompt": 3,
+      "generated": 2,
+      "blocks": [
+       4,
+       5
+      ]
+     }
+    }
+   },
+   {
+    "step": 12,
+    "scheduled": [
+     0,
+     1,
+     4
+    ],
+    "preempted": [],
+    "waiting": [],
+    "running": [
+     0,
+     1,
+     4
+    ],
+    "free_blocks": 0,
+    "seqs": {
+     "0": {
+      "status": "RUNNING",
+      "length": 17,
+      "prompt": 13,
+      "generated": 11,
+      "blocks": [
+       7,
+       2,
+       3,
+       8,
+       0
+      ]
+     },
+     "1": {
+      "status": "RUNNING",
+      "length": 12,
+      "prompt": 9,
+      "generated": 7,
+      "blocks": [
+       9,
+       6,
+       1
+      ]
+     },
+     "2": {
+      "status": "FINISHED",
+      "length": 17,
+      "prompt": 7,
+      "generated": 10,
+      "blocks": []
+     },
+     "3": {
+      "status": "FINISHED",
+      "length": 13,
+      "prompt": 4,
+      "generated": 9,
+      "blocks": []
+     },
+     "4": {
+      "status": "RUNNING",
+      "length": 6,
+      "prompt": 3,
+      "generated": 3,
+      "blocks": [
+       4,
+       5
+      ]
+     }
+    }
+   },
+   {
+    "step": 13,
+    "scheduled": [
+     0,
+     4,
+     1
+    ],
+    "preempted": [
+     1
+    ],
+    "waiting": [],
+    "running": [
+     4,
+     1
+    ],
+    "free_blocks": 5,
+    "seqs": {
+     "0": {
+      "status": "FINISHED",
+      "length": 18,
+      "prompt": 13,
+      "generated": 12,
+      "blocks": []
+     },
+     "1": {
+      "status": "RUNNING",
+      "length": 13,
+      "prompt": 12,
+      "generated": 8,
+      "blocks": [
+       1,
+       6,
+       9
+      ]
+     },
+     "2": {
+      "status": "FINISHED",
+      "length": 17,
+      "prompt": 7,
+      "generated": 10,
+      "blocks": []
+     },
+     "3": {
+      "status": "FINISHED",
+      "length": 13,
+      "prompt": 4,
+      "generated": 9,
+      "blocks": []
+     },
+     "4": {
+      "status": "RUNNING",
+      "length": 7,
+      "prompt": 3,
+      "generated": 4,
+      "blocks": [
+       4,
+       5
+      ]
+     }
+    }
+   },
+   {
+    "step": 14,
+    "scheduled": [
+     4,
+     1
+    ],
+    "preempted": [],
+    "waiting": [],
+    "running": [
+     4,
+     1
+    ],
+    "free_blocks": 4,
+    "seqs": {
+     "0": {
+      "status": "FINISHED",
+      "length": 18,
+      "prompt": 13,
+      "generated": 12,
+      "blocks": []
+     },
+     "1": {
+      "status": "RUNNING",
+      "length": 14,
+      "prompt": 12,
+      "generated": 9,
+      "blocks": [
+       1,
+       6,
+       9,
+       0
+      ]
+     },
+     "2": {
+      "status": "FINISHED",
+      "length": 17,
+      "prompt": 7,
+      "generated": 10,
+      "blocks": []
+     },
+     "3": {
+      "status": "FINISHED",
+      "length": 13,
+      "prompt": 4,
+      "generated": 9,
+      "blocks": []
+     },
+     "4": {
+      "status": "RUNNING",
+      "length": 8,
+      "prompt": 3,
+      "generated": 5,
+      "blocks": [
+       4,
+       5
+      ]
+     }
+    }
+   },
+   {
+    "step": 15,
+    "scheduled": [
+     4,
+     1
+    ],
+    "preempted": [],
+    "waiting": [],
+    "running": [
+     1
+    ],
+    "free_blocks": 6,
+    "seqs": {
+     "0": {
+      "status": "FINISHED",
+      "length": 18,
+      "prompt": 13,
+      "generated": 12,
+      "blocks": []
+     },
+     "1": {
+      "status": "RUNNING",
+      "length": 15,
+      "prompt": 12,
+      "generated": 10,
+      "blocks": [
+       1,
+       6,
+       9,
+       0
+      ]
+     },
+     "2": {
+      "status": "FINISHED",
+      "length": 17,
+      "prompt": 7,
+      "generated": 10,
+      "blocks": []
+     },
+     "3": {
+      "status": "FINISHED",
+      "length": 13,
+      "prompt": 4,
+      "generated": 9,
+      "blocks": []
+     },
+     "4": {
+      "status": "FINISHED",
+      "length": 9,
+      "prompt": 3,
+      "generated": 6,
+      "blocks": []
+     }
+    }
+   },
+   {
+    "step": 16,
+    "scheduled": [
+     1
+    ],
+    "preempted": [],
+    "waiting": [],
+    "running": [
+     1
+    ],
+    "free_blocks": 6,
+    "seqs": {
+     "0": {
+      "status": "FINISHED",
+      "length": 18,
+      "prompt": 13,
+      "generated": 12,
+      "blocks": []
+     },
+     "1": {
+      "status": "RUNNING",
+      "length": 16,
+      "prompt": 12,
+      "generated": 11,
+      "blocks": [
+       1,
+       6,
+       9,
+       0
+      ]
+     },
+     "2": {
+      "status": "FINISHED",
+      "length": 17,
+      "prompt": 7,
+      "generated": 10,
+      "blocks": []
+     },
+     "3": {
+      "status": "FINISHED",
+      "length": 13,
+      "prompt": 4,
+      "generated": 9,
+      "blocks": []
+     },
+     "4": {
+      "status": "FINISHED",
+      "length": 9,
+      "prompt": 3,
+      "generated": 6,
+      "blocks": []
+     }
+    }
+   },
+   {
+    "step": 17,
+    "scheduled": [
+     1
+    ],
+    "preempted": [],
+    "waiting": [],
+    "running": [
+     1
+    ],
+    "free_blocks": 5,
+    "seqs": {
+     "0": {
+      "status": "FINISHED",
+      "length": 18,
+      "prompt": 13,
+      "generated": 12,
+      "blocks": []
+     },
+     "1": {
+      "status": "RUNNING",
+      "length": 17,
+      "prompt": 12,
+      "generated": 12,
+      "blocks": [
+       1,
+       6,
+       9,
+       0,
+       8
+      ]
+     },
+     "2": {
+      "status": "FINISHED",
+      "length": 17,
+      "prompt": 7,
+      "generated": 10,
+      "blocks": []
+     },
+     "3": {
+      "status": "FINISHED",
+      "length": 13,
+      "prompt": 4,
+      "generated": 9,
+      "blocks": []
+     },
+     "4": {
+      "status": "FINISHED",
+      "length": 9,
+      "prompt": 3,
+      "generated": 6,
+      "blocks": []
+     }
+    }
+   },
+   {
+    "step": 18,
+    "scheduled": [
+     1
+    ],
+    "preempted": [],
+    "waiting": [],
+    "running": [
+     1
+    ],
+    "free_blocks": 5,
+    "seqs": {
+     "0": {
+      "status": "FINISHED",
+      "length": 18,
+      "prompt": 13,
+      "generated": 12,
+      "blocks": []
+     },
+     "1": {
+      "status": "RUNNING",
+      "length": 18,
+      "prompt": 12,
+      "generated": 13,
+      "blocks": [
+       1,
+       6,
+       9,
+       0,
+       8
+      ]
+     },
+     "2": {
+      "status": "FINISHED",
+      "length": 17,
+      "prompt": 7,
+      "generated": 10,
+      "blocks": []
+     },
+     "3": {
+      "status": "FINISHED",
+      "length": 13,
+      "prompt": 4,
+      "generated": 9,
+      "blocks": []
+     },
+     "4": {
+      "status": "FINISHED",
+      "length": 9,
+      "prompt": 3,
+      "generated": 6,
+      "blocks": []
+     }
+    }
+   },
+   {
+    "step": 19,
+    "scheduled": [
+     1
+    ],
+    "preempted": [],
+    "waiting": [],
+    "running": [],
+    "free_blocks": 10,
+    "seqs": {
+     "0": {
+      "status": "FINISHED",
+      "length": 18,
+      "prompt": 13,
+      "generated": 12,
+      "blocks": []
+     },
+     "1": {
+      "status": "FINISHED",
+      "length": 19,
+      "prompt": 12,
+      "generated": 14,
+      "blocks": []
+     },
+     "2": {
+      "status": "FINISHED",
+      "length": 17,
+      "prompt": 7,
+      "generated": 10,
+      "blocks": []
+     },
+     "3": {
+      "status": "FINISHED",
+      "length": 13,
+      "prompt": 4,
+      "generated": 9,
+      "blocks": []
+     },
+     "4": {
+      "status": "FINISHED",
+      "length": 9,
+      "prompt": 3,
+      "generated": 6,
+      "blocks": []
+     }
+    }
+   }
+  ]
+ },
+ "staggered": {
+  "config": {
+   "num_blocks": 9,
+   "block_size": 2,
+   "max_batch_size": 3,
+   "arrivals": [
+    [
+     0,
+     3,
+     5
+    ],
+    [
+     1,
+     4,
+     4
+    ],
+    [
+     1,
+     2,
+     7
+    ],
+    [
+     3,
+     5,
+     3
+    ],
+    [
+     4,
+     1,
+     6
+    ],
+    [
+     6,
+     3,
+     4
+    ],
+    [
+     6,
+     2,
+     2
+    ]
+   ]
+  },
+  "trace": [
+   {
+    "step": 0,
+    "scheduled": [
+     0
+    ],
+    "preempted": [],
+    "waiting": [],
+    "running": [
+     0
+    ],
+    "free_blocks": 7,
+    "seqs": {
+     "0": {
+      "status": "RUNNING",
+      "length": 4,
+      "prompt": 3,
+      "generated": 1,
+      "blocks": [
+       8,
+       7
+      ]
+     }
+    }
+   },
+   {
+    "step": 1,
+    "scheduled": [
+     0,
+     1,
+     2
+    ],
+    "preempted": [],
+    "waiting": [],
+    "running": [
+     0,
+     1,
+     2
+    ],
+    "free_blocks": 3,
+    "seqs": {
+     "0": {
+      "status": "RUNNING",
+      "length": 5,
+      "prompt": 3,
+      "generated": 2,
+      "blocks": [
+       8,
+       7,
+       6
+      ]
+     },
+     "1": {
+      "status": "RUNNING",
+      "length": 5,
+      "prompt": 4,
+      "generated": 1,
+      "blocks": [
+       5,
+       4
+      ]
+     },
+     "2": {
+      "status": "RUNNING",
+      "length": 3,
+      "prompt": 2,
+      "generated": 1,
+      "blocks": [
+       3
+      ]
+     }
+    }
+   },
+   {
+    "step": 2,
+    "scheduled": [
+     0,
+     1,
+     2
+    ],
+    "preempted": [],
+    "waiting": [],
+    "running": [
+     0,
+     1,
+     2
+    ],
+    "free_blocks": 1,
+    "seqs": {
+     "0": {
+      "status": "RUNNING",
+      "length": 6,
+      "prompt": 3,
+      "generated": 3,
+      "blocks": [
+       8,
+       7,
+       6
+      ]
+     },
+     "1": {
+      "status": "RUNNING",
+      "length": 6,
+      "prompt": 4,
+      "generated": 2,
+      "blocks": [
+       5,
+       4,
+       1
+      ]
+     },
+     "2": {
+      "status": "RUNNING",
+      "length": 4,
+      "prompt": 2,
+      "generated": 2,
+      "blocks": [
+       3,
+       2
+      ]
+     }
+    }
+   },
+   {
+    "step": 3,
+    "scheduled": [
+     0,
+     2
+    ],
+    "preempted": [
+     1
+    ],
+    "waiting": [
+     1,
+     3
+    ],
+    "running": [
+     0,
+     2
+    ],
+    "free_blocks": 2,
+    "seqs": {
+     "0": {
+      "status": "RUNNING",
+      "length": 7,
+      "prompt": 3,
+      "generated": 4,
+      "blocks": [
+       8,
+       7,
+       6,
+       1
+      ]
+     },
+     "1": {
+      "status": "PREEMPTED",
+      "length": 6,
+      "prompt": 6,
+      "generated": 2,
+      "blocks": []
+     },
+     "2": {
+      "status": "RUNNING",
+      "length": 5,
+      "prompt": 2,
+      "generated": 3,
+      "blocks": [
+       3,
+       2,
+       0
+      ]
+     },
+     "3": {
+      "status": "WAITING",
+      "length": 5,
+      "prompt": 5,
+      "generated": 0,
+      "blocks": []
+     }
+    }
+   },
+   {
+    "step": 4,
+    "scheduled": [
+     0,
+     2
+    ],
+    "preempted": [],
+    "waiting": [
+     1,
+     3,
+     4
+    ],
+    "running": [
+     2
+    ],
+    "free_blocks": 6,
+    "seqs": {
+     "0": {
+      "status": "FINISHED",
+      "length": 8,
+      "prompt": 3,
+      "generated": 5,
+      "blocks": []
+     },
+     "1": {
+      "status": "PREEMPTED",
+      "length": 6,
+      "prompt": 6,
+      "generated": 2,
+      "blocks": []
+     },
+     "2": {
+      "status": "RUNNING",
+      "length": 6,
+      "prompt": 2,
+      "generated": 4,
+      "blocks": [
+       3,
+       2,
+       0
+      ]
+     },
+     "3": {
+      "status": "WAITING",
+      "length": 5,
+      "prompt": 5,
+      "generated": 0,
+      "blocks": []
+     },
+     "4": {
+      "status": "WAITING",
+      "length": 1,
+      "prompt": 1,
+      "generated": 0,
+      "blocks": []
+     }
+    }
+   },
+   {
+    "step": 5,
+    "scheduled": [
+     2,
+     1
+    ],
+    "preempted": [],
+    "waiting": [
+     3,
+     4
+    ],
+    "running": [
+     2,
+     1
+    ],
+    "free_blocks": 2,
+    "seqs": {
+     "0": {
+      "status": "FINISHED",
+      "length": 8,
+      "prompt": 3,
+      "generated": 5,
+      "blocks": []
+     },
+     "1": {
+      "status": "RUNNING",
+      "length": 7,
+      "prompt": 6,
+      "generated": 3,
+      "blocks": [
+       6,
+       7,
+       8
+      ]
+     },
+     "2": {
+      "status": "RUNNING",
+      "length": 7,
+      "prompt": 2,
+      "generated": 5,
+      "blocks": [
+       3,
+       2,
+       0,
+       1
+      ]
+     },
+     "3": {
+      "status": "WAITING",
+      "length": 5,
+      "prompt": 5,
+      "generated": 0,
+      "blocks": []
+     },
+     "4": {
+      "status": "WAITING",
+      "length": 1,
+      "prompt": 1,
+      "generated": 0,
+      "blocks": []
+     }
+    }
+   },
+   {
+    "step": 6,
+    "scheduled": [
+     2,
+     1
+    ],
+    "preempted": [],
+    "waiting": [
+     3,
+     4,
+     5,
+     6
+    ],
+    "running": [
+     2
+    ],
+    "free_blocks": 5,
+    "seqs": {
+     "0": {
+      "status": "FINISHED",
+      "length": 8,
+      "prompt": 3,
+      "generated": 5,
+      "blocks": []
+     },
+     "1": {
+      "status": "FINISHED",
+      "length": 8,
+      "prompt": 6,
+      "generated": 4,
+      "blocks": []
+     },
+     "2": {
+      "status": "RUNNING",
+      "length": 8,
+      "prompt": 2,
+      "generated": 6,
+      "blocks": [
+       3,
+       2,
+       0,
+       1
+      ]
+     },
+     "3": {
+      "status": "WAITING",
+      "length": 5,
+      "prompt": 5,
+      "generated": 0,
+      "blocks": []
+     },
+     "4": {
+      "status": "WAITING",
+      "length": 1,
+      "prompt": 1,
+      "generated": 0,
+      "blocks": []
+     },
+     "5": {
+      "status": "WAITING",
+      "length": 3,
+      "prompt": 3,
+      "generated": 0,
+      "blocks": []
+     },
+     "6": {
+      "status": "WAITING",
+      "length": 2,
+      "prompt": 2,
+      "generated": 0,
+      "blocks": []
+     }
+    }
+   },
+   {
+    "step": 7,
+    "scheduled": [
+     2,
+     3,
+     4
+    ],
+    "preempted": [],
+    "waiting": [
+     5,
+     6
+    ],
+    "running": [
+     3,
+     4
+    ],
+    "free_blocks": 5,
+    "seqs": {
+     "0": {
+      "status": "FINISHED",
+      "length": 8,
+      "prompt": 3,
+      "generated": 5,
+      "blocks": []
+     },
+     "1": {
+      "status": "FINISHED",
+      "length": 8,
+      "prompt": 6,
+      "generated": 4,
+      "blocks": []
+     },
+     "2": {
+      "status": "FINISHED",
+      "length": 9,
+      "prompt": 2,
+      "generated": 7,
+      "blocks": []
+     },
+     "3": {
+      "status": "RUNNING",
+      "length": 6,
+      "prompt": 5,
+      "generated": 1,
+      "blocks": [
+       8,
+       7,
+       6
+      ]
+     },
+     "4": {
+      "status": "RUNNING",
+      "length": 2,
+      "prompt": 1,
+      "generated": 1,
+      "blocks": [
+       5
+      ]
+     },
+     "5": {
+      "status": "WAITING",
+      "length": 3,
+      "prompt": 3,
+      "generated": 0,
+      "blocks": []
+     },
+     "6": {
+      "status": "WAITING",
+      "length": 2,
+      "prompt": 2,
+      "generated": 0,
+      "blocks": []
+     }
+    }
+   },
+   {
+    "step": 8,
+    "scheduled": [
+     3,
+     4,
+     5
+    ],
+    "preempted": [],
+    "waiting": [
+     6
+    ],
+    "running": [
+     3,
+     4,
+     5
+    ],
+    "free_blocks": 1,
+    "seqs": {
+     "0": {
+      "status": "FINISHED",
+      "length": 8,
+      "prompt": 3,
+      "generated": 5,
+      "blocks": []
+     },
+     "1": {
+      "status": "FINISHED",
+      "length": 8,
+      "prompt": 6,
+      "generated": 4,
+      "blocks": []
+     },
+     "2": {
+      "status": "FINISHED",
+      "length": 9,
+      "prompt": 2,
+      "generated": 7,
+      "blocks": []
+     },
+     "3": {
+      "status": "RUNNING",
+      "length": 7,
+      "prompt": 5,
+      "generated": 2,
+      "blocks": [
+       8,
+       7,
+       6,
+       1
+      ]
+     },
+     "4": {
+      "status": "RUNNING",
+      "length": 3,
+      "prompt": 1,
+      "generated": 2,
+      "blocks": [
+       5,
+       4
+      ]
+     },
+     "5": {
+      "status": "RUNNING",
+      "length": 4,
+      "prompt": 3,
+      "generated": 1,
+      "blocks": [
+       0,
+       2
+      ]
+     },
+     "6": {
+      "status": "WAITING",
+      "length": 2,
+      "prompt": 2,
+      "generated": 0,
+      "blocks": []
+     }
+    }
+   },
+   {
+    "step": 9,
+    "scheduled": [
+     3,
+     4,
+     5
+    ],
+    "preempted": [],
+    "waiting": [
+     6
+    ],
+    "running": [
+     4,
+     5
+    ],
+    "free_blocks": 4,
+    "seqs": {
+     "0": {
+      "status": "FINISHED",
+      "length": 8,
+      "prompt": 3,
+      "generated": 5,
+      "blocks": []
+     },
+     "1": {
+      "status": "FINISHED",
+      "length": 8,
+      "prompt": 6,
+      "generated": 4,
+      "blocks": []
+     },
+     "2": {
+      "status": "FINISHED",
+      "length": 9,
+      "prompt": 2,
+      "generated": 7,
+      "blocks": []
+     },
+     "3": {
+      "status": "FINISHED",
+      "length": 8,
+      "prompt": 5,
+      "generated": 3,
+      "blocks": []
+     },
+     "4": {
+      "status": "RUNNING",
+      "length": 4,
+      "prompt": 1,
+      "generated": 3,
+      "blocks": [
+       5,
+       4
+      ]
+     },
+     "5": {
+      "status": "RUNNING",
+      "length": 5,
+      "prompt": 3,
+      "generated": 2,
+      "blocks": [
+       0,
+       2,
+       3
+      ]
+     },
+     "6": {
+      "status": "WAITING",
+      "length": 2,
+      "prompt": 2,
+      "generated": 0,
+      "blocks": []
+     }
+    }
+   },
+   {
+    "step": 10,
+    "scheduled": [
+     4,
+     5,
+     6
+    ],
+    "preempted": [],
+    "waiting": [],
+    "running": [
+     4,
+     5,
+     6
+    ],
+    "free_blocks": 2,
+    "seqs": {
+     "0": {
+      "status": "FINISHED",
+      "length": 8,
+      "prompt": 3,
+      "generated": 5,
+      "blocks": []
+     },
+     "1": {
+      "status": "FINISHED",
+      "length": 8,
+      "prompt": 6,
+      "generated": 4,
+      "blocks": []
+     },
+     "2": {
+      "status": "FINISHED",
+      "length": 9,
+      "prompt": 2,
+      "generated": 7,
+      "blocks": []
+     },
+     "3": {
+      "status": "FINISHED",
+      "length": 8,
+      "prompt": 5,
+      "generated": 3,
+      "blocks": []
+     },
+     "4": {
+      "status": "RUNNING",
+      "length": 5,
+      "prompt": 1,
+      "generated": 4,
+      "blocks": [
+       5,
+       4,
+       1
+      ]
+     },
+     "5": {
+      "status": "RUNNING",
+      "length": 6,
+      "prompt": 3,
+      "generated": 3,
+      "blocks": [
+       0,
+       2,
+       3
+      ]
+     },
+     "6": {
+      "status": "RUNNING",
+      "length": 3,
+      "prompt": 2,
+      "generated": 1,
+      "blocks": [
+       6
+      ]
+     }
+    }
+   },
+   {
+    "step": 11,
+    "scheduled": [
+     4,
+     5,
+     6
+    ],
+    "preempted": [],
+    "waiting": [],
+    "running": [
+     4
+    ],
+    "free_blocks": 6,
+    "seqs": {
+     "0": {
+      "status": "FINISHED",
+      "length": 8,
+      "prompt": 3,
+      "generated": 5,
+      "blocks": []
+     },
+     "1": {
+      "status": "FINISHED",
+      "length": 8,
+      "prompt": 6,
+      "generated": 4,
+      "blocks": []
+     },
+     "2": {
+      "status": "FINISHED",
+      "length": 9,
+      "prompt": 2,
+      "generated": 7,
+      "blocks": []
+     },
+     "3": {
+      "status": "FINISHED",
+      "length": 8,
+      "prompt": 5,
+      "generated": 3,
+      "blocks": []
+     },
+     "4": {
+      "status": "RUNNING",
+      "length": 6,
+      "prompt": 1,
+      "generated": 5,
+      "blocks": [
+       5,
+       4,
+       1
+      ]
+     },
+     "5": {
+      "status": "FINISHED",
+      "length": 7,
+      "prompt": 3,
+      "generated": 4,
+      "blocks": []
+     },
+     "6": {
+      "status": "FINISHED",
+      "length": 4,
+      "prompt": 2,
+      "generated": 2,
+      "blocks": []
+     }
+    }
+   },
+   {
+    "step": 12,
+    "scheduled": [
+     4
+    ],
+    "preempted": [],
+    "waiting": [],
+    "running": [],
+    "free_blocks": 9,
+    "seqs": {
+     "0": {
+      "status": "FINISHED",
+      "length": 8,
+      "prompt": 3,
+      "generated": 5,
+      "blocks": []
+     },
+     "1": {
+      "status": "FINISHED",
+      "length": 8,
+      "prompt": 6,
+      "generated": 4,
+      "blocks": []
+     },
+     "2": {
+      "status": "FINISHED",
+      "length": 9,
+      "prompt": 2,
+      "generated": 7,
+      "blocks": []
+     },
+     "3": {
+      "status": "FINISHED",
+      "length": 8,
+      "prompt": 5,
+      "generated": 3,
+      "blocks": []
+     },
+     "4": {
+      "status": "FINISHED",
+      "length": 7,
+      "prompt": 1,
+      "generated": 6,
+      "blocks": []
+     },
+     "5": {
+      "status": "FINISHED",
+      "length": 7,
+      "prompt": 3,
+      "generated": 4,
+      "blocks": []
+     },
+     "6": {
+      "status": "FINISHED",
+      "length": 4,
+      "prompt": 2,
+      "generated": 2,
+      "blocks": []
+     }
+    }
+   }
+  ]
+ }
+}

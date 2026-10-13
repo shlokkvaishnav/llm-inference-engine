@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>mini-vLLM — Shlok Vaishnav</title>
-<meta name="description" content="A from-scratch LLM inference engine with continuous batching and a paged KV-cache, checked token for token against Hugging Face transformers.">
+<meta name="description" content="A from-scratch LLM inference engine with continuous batching and a paged KV-cache. Watch its scheduler work in the browser, or stream completions from your own running server.">
 <meta name="color-scheme" content="light dark">
 <link rel="canonical" href="https://shlokkvaishnav.github.io/llm-inference-engine/">
 <meta property="og:type" content="website">
@@ -15,6 +15,7 @@
 <link rel="preload" href="assets/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="style.css">
 <script type="module" src="main.js"></script>
+<script type="module" src="app.js"></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -31,6 +32,13 @@
 <div class="stat"><dt>4× smaller</dt><dd>weights with INT4, at 0.98 cosine similarity</dd></div>
 </dl>
 
+<div class="tabs" role="tablist" aria-label="Sections">
+<button class="tab" role="tab" id="tab-results" aria-controls="results" aria-selected="true">Results</button>
+<button class="tab" role="tab" id="tab-lab" aria-controls="lab" aria-selected="false" tabindex="-1">Scheduler lab</button>
+<button class="tab" role="tab" id="tab-playground" aria-controls="playground" aria-selected="false" tabindex="-1">Playground</button>
+</div>
+
+<section class="panel" id="results" role="tabpanel" aria-labelledby="tab-results">
 <h2>How it works</h2>
 <h3>Continuous batching</h3>
 <p>Standard batching waits for a full batch, then releases the whole batch when the slowest sequence finishes. That wastes GPU time whenever sequences differ in length. Continuous batching runs a decode step every tick. New sequences join, and finished ones leave, without stalling the rest. The scheduler decides at each step which sequences run, which wait, and which get preempted under memory pressure. A preempted sequence has its blocks freed, and it is re-prefilled from its prompt and the tokens generated so far when it is admitted again.</p>
@@ -94,6 +102,82 @@
 <li>Where the speed-up from the last round of changes comes from has not been measured one change at a time.</li>
 <li>The first run in a fresh process is much slower than the rest, so the benchmark scripts do an untimed warm-up first.</li>
 </ul>
+</section>
+
+<!-- ============================== Scheduler lab ============================== -->
+<section class="panel" id="lab" role="tabpanel" aria-labelledby="tab-lab" hidden>
+<h2>Watch the scheduler work</h2>
+<p>This is mini-vLLM's own scheduling code: the continuous-batching scheduler, the paged KV-cache block manager and the engine step, ported line by line to JavaScript. A test checks the port step by step against traces of the Python engine. Only the model is left out: each step, every running sequence gets one token.</p>
+<div class="controls">
+<label>Workload <select id="preset">
+<option value="mixed">Mixed lengths</option>
+<option value="tail">One long request, many short</option>
+<option value="burst">A burst arrives mid-run</option>
+<option value="pressure">Memory pressure (preemption)</option>
+</select></label>
+<label>KV blocks <input type="number" id="cfg-blocks" min="4" max="96" value="24"></label>
+<label>Block size <select id="cfg-bs"><option>2</option><option selected>4</option><option>8</option><option>16</option></select></label>
+<label>Max batch <input type="number" id="cfg-batch" min="1" max="12" value="4"></label>
+</div>
+<p class="buttons">
+<button class="btn btn-primary" id="play" type="button">Play</button>
+<button class="btn" id="step" type="button">Step</button>
+<button class="btn" id="reset" type="button">Reset</button>
+<label class="controls" style="margin:0">Speed <input type="range" id="speed" min="1" max="10" value="4" aria-label="Speed"></label>
+</p>
+<dl class="stats" id="lab-stats"></dl>
+
+<h3>KV-cache block pool</h3>
+<div class="pool" id="pool" role="img" aria-label="KV-cache blocks"></div>
+<div class="queues">
+<div class="queue"><h4>Waiting (first in line on the left)</h4><ol id="q-waiting"></ol></div>
+<div class="queue"><h4>Running batch</h4><ol id="q-running"></ol></div>
+</div>
+<div class="log" id="log" aria-live="polite"></div>
+
+<h3>Timeline</h3>
+<div class="timeline" id="timeline"></div>
+<p class="muted" style="font: .85rem/1.5 var(--sans)">Each row is a request, each column a step. Grey: waiting. Colour: running. Red: preempted (its blocks were freed and it waits to recompute).</p>
+
+<h3>Add your own request</h3>
+<div class="controls">
+<label>Prompt tokens <input type="number" id="add-prompt" min="1" max="200" value="6"></label>
+<label>Max new tokens <input type="number" id="add-max" min="1" max="200" value="8"></label>
+<button class="btn" id="add" type="button">Add request</button>
+</div>
+<p class="compare" id="compare"></p>
+</section>
+
+<!-- ============================== Playground ============================== -->
+<section class="panel" id="playground" role="tabpanel" aria-labelledby="tab-playground" hidden>
+<h2>Stream from your own server</h2>
+<p>The engine needs a GPU (or a CPU with GPT-2), so this page cannot run the model itself. Start the server on your machine, connect, and send several requests at once to watch continuous batching: each request streams on its own lane, with its own time to first token.</p>
+<details class="numbers"><summary>Start the server</summary>
+<pre class="cmd"><code>pip install -e .
+MINI_VLLM_MODEL=gpt2 MINI_VLLM_DEVICE=cpu \
+MINI_VLLM_CORS_ORIGINS=https://shlokkvaishnav.github.io \
+uvicorn mini_vllm.api.server:app --port 8000</code></pre>
+<p><code>MINI_VLLM_CORS_ORIGINS</code> lets this page call the server. Your browser can ask for permission to reach a local address. Leave out the GPT-2 settings to serve TinyLlama on a GPU.</p>
+</details>
+<div class="controls">
+<label>Server <input type="url" id="server" value="http://localhost:8000" size="28"></label>
+<button class="btn" id="connect" type="button">Connect</button>
+</div>
+<p class="status" id="conn" aria-live="polite">Not connected.</p>
+<label for="prompt" class="muted" style="font: .9rem var(--sans); display:block; margin-top:1rem">Prompt</label>
+<textarea id="prompt">The three main ideas behind continuous batching are</textarea>
+<div class="controls">
+<label>Concurrent copies <input type="number" id="copies" min="1" max="16" value="4"></label>
+<label>Max tokens <input type="number" id="max-tokens" min="1" max="512" value="48"></label>
+<label>Temperature <input type="number" id="temperature" min="0" max="2" step="0.1" value="0.8"></label>
+<label>Top-p <input type="number" id="top-p" min="0.05" max="1" step="0.05" value="0.95"></label>
+<label>Stop <input type="text" id="stop" placeholder="optional" size="8"></label>
+</div>
+<p class="buttons"><button class="btn btn-primary" id="send" type="button" disabled>Send</button> <button class="btn" id="cancel" type="button" disabled>Stop</button></p>
+<p class="status" id="run-status" aria-live="polite"></p>
+<div class="gantt" id="gantt"></div>
+<div class="lanes" id="lanes"></div>
+</section>
 </main>
 <footer>
 <p>The charts are drawn in your browser from <code>site/data/benchmarks.json</code>, which holds the numbers from the README results tables.</p>
