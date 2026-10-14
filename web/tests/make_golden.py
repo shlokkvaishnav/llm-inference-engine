@@ -6,7 +6,7 @@ fake runner calls the same block-manager methods as PagedLlamaRunner:
 allocate() in prefill and has_capacity_for_next_token() in decode.
 
 Run from the repo root (no torch needed):
-    python site/test/make_golden.py
+    python web/tests/make_golden.py
 """
 
 from __future__ import annotations
@@ -87,7 +87,7 @@ def run(cfg):
 
 
 golden = {name: {"config": cfg, "trace": run(cfg)} for name, cfg in SCENARIOS.items()}
-path = Path(__file__).with_name("golden.json")
+path = Path(__file__).with_name("golden.json")  # web/tests/golden.json
 path.write_text(json.dumps(golden, indent=1) + "\n")
 for name, g in golden.items():
     pre = sum(len(t["preempted"]) for t in g["trace"])

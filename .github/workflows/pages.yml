@@ -1,13 +1,14 @@
 name: Deploy the project page
 
-# Builds the project page in site/ and publishes it on GitHub Pages.
-# The charts read result files of this repository. See site/build.sh.
+# Builds the website in web/ (a Next.js static export) and publishes it on
+# GitHub Pages under /llm-inference-engine. The benchmark charts read
+# web/data/benchmarks.json, the numbers from the README results tables.
 
 on:
   push:
     branches: [main]
     paths:
-      - "site/**"
+      - "web/**"
       - ".github/workflows/pages.yml"
   workflow_dispatch:
 
@@ -26,12 +27,25 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - name: Build the page
-        run: bash site/build.sh
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      - name: Install
+        run: npm ci
+        working-directory: web
+
+      - name: Build the website
+        run: npx next build
+        working-directory: web
+        env:
+          NEXT_TELEMETRY_DISABLED: "1"
 
       - uses: actions/upload-pages-artifact@v5
         with:
-          path: _site
+          path: web/out
 
   deploy:
     needs: build

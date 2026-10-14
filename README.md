@@ -26,10 +26,10 @@ verified token-for-token against Hugging Face `transformers`.
   validation and back-pressure.
 - **Benchmarks** — baseline comparison against Hugging Face `generate()` and a concurrent
   load test against the running server.
-- **Frontend** — the [project page](https://shlokkvaishnav.github.io/llm-inference-engine/) has a
-  scheduler lab (the engine's own scheduling code, ported to JavaScript and checked step by step
-  against the Python engine) and a playground that streams concurrent completions from your
-  running server.
+- **Website** — [shlokkvaishnav.github.io/llm-inference-engine](https://shlokkvaishnav.github.io/llm-inference-engine/),
+  a Next.js app in `web/`. Its home page and scheduler lab run the engine's own scheduling code,
+  ported to TypeScript and checked step by step against the Python engine. The playground streams
+  concurrent completions from your running server. Benchmarks and docs pages are also there.
 
 ## How it works
 
@@ -242,11 +242,11 @@ docker compose up api-cpu    # CPU only, port 8001
 
 ```bash
 pytest tests/ -v                       # CPU subset
-node --test site/test/sim.test.mjs     # the scheduler lab's JS port against the Python engine
+cd web && npm test                     # the website's scheduler port against the Python engine
 ```
 
-- `site/test/make_golden.py` records step-by-step traces of the real `LLMEngine`, `Scheduler`
-  and `BlockManager` (no model needed). The Node test checks that `site/sim.js` reproduces every
+- `web/tests/make_golden.py` records step-by-step traces of the real `LLMEngine`, `Scheduler`
+  and `BlockManager` (no model needed). The vitest test checks that `web/lib/sim.ts` reproduces every
   step: queues, preemptions, block IDs and lengths.
 
 - GPU-only tests (Triton kernel, real-model paged decode) skip cleanly without CUDA.
@@ -284,6 +284,8 @@ benchmarks/       quantization report, baseline comparison, load test
 tests/            correctness and unit tests (CPU-safe; GPU-only tests skip
                    without CUDA)
 notebooks/        Kaggle GPU notebook: tests + benchmarks, self-contained
+web/              website (Next.js static export): lib/sim.ts is the TypeScript port of the
+                   scheduler, tests/ checks it against traces of the Python engine
 Dockerfile        GPU image          docker-compose.yml   api / api-cpu services
 Dockerfile.cpu    CPU image
 ```
